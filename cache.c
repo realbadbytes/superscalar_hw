@@ -565,7 +565,9 @@ cache_access(struct cache_t *cp,	/* cache to access */
 	{
 	  if (blk->tag == tag && (blk->status & CACHE_BLK_VALID)) {
       if (cp->policy == LRU || cp->policy == MRU) {
-        update_way_list(&cp->sets[set], blk, Head);
+        update_way_list(&cp->sets[set], blk->way_prev, Head);
+	update_way_list(&cp->sets[set], blk, Head);
+	update_way_list(&cp->sets[set], blk->way_next, Head);
       }
 	    goto cache_hit;
     }
